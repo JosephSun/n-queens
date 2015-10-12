@@ -197,14 +197,17 @@
       for (row = 0; row < this.attributes.n - 1; row++) {
         var numOfPieces = 0;
         var count = 0; 
-        for (column = this.attrutes.length - 1; column >= 1 + row; column-) {
-          if (this.attributes[row + count][column - row] === 1) {
-            numOfPieces++;
+        for (column = this.attributes.length - 1; column >= 1 + row; column--) {
+          if (count - row >= 0) {
+            if (this.attributes[count - row][column - row] === 1) {
+              numOfPieces++;
+            }
+            count++;
           }
-          count++;
-        }
-        if (numOfPieces > 1) {
-          return true;
+          if (numOfPieces > 1) {
+            return true;
+          }
+            
         }
       }
       //first for loop closes
