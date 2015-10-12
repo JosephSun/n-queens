@@ -112,12 +112,11 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      debugger;
       for(var i = 0; i < this.attributes.n; i++ ){
 
         var countMyBlessings = 0;
 
-        if(Array.isArray(this.attributes[property])) {
+        if (Array.isArray(this.attributes[i])) {
           for(var j = 0; j < this.attributes.n; j++){
             if(this.attributes[j][i] === 1){
               countMyBlessings++;
@@ -139,12 +138,48 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+ 
+      for (row = 0; row < this.attributes.n - 1; row++) {
+        var numOfPieces = 0;
+        var count = 0; 
+        for (column = 0; column < this.attributes.n - row; column++) {
+          if (this.attributes[row + count][column] === 1) {
+            numOfPieces++;
+          }
+          count++;
+        }
+        if (numOfPieces > 1) {
+          return true;
+        }
+      }
+      //first for loop closes
+
+
+      for (column = 0; column < this.attributes.n - 1; column++) {
+        var numOfPieces = 0;
+        var count = 0; 
+        for (row = 0; row < this.attributes.n - column; row++) {
+          if (this.attributes[row][column + count] === 1) {
+            numOfPieces++;
+          }
+          count++;
+        }
+        if (numOfPieces > 1) {
+          return true;
+        }
+      }//second for loop closes
+      
+
+
+
+
+      //first for loop closes
+      return false;
     },
 
 
@@ -159,6 +194,38 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      for (row = 0; row < this.attributes.n - 1; row++) {
+        var numOfPieces = 0;
+        var count = 0; 
+        for (column = this.attrutes.length - 1; column >= 1 + row; column-) {
+          if (this.attributes[row + count][column] === 1) {
+            numOfPieces++;
+          }
+          count++;
+        }
+        if (numOfPieces > 1) {
+          return true;
+        }
+      }
+      //first for loop closes
+
+
+      for (column = 0; column < this.attributes.n - 1; column++) {
+        var numOfPieces = 0;
+        var count = 0; 
+        for (row = 0; row < this.attributes.n - column; row++) {
+          if (this.attributes[row][column + count] === 1) {
+            numOfPieces++;
+          }
+          count++;
+        }
+        if (numOfPieces > 1) {
+          return true;
+        }
+      }//second for loop closes
+
+
+
       return false; // fixme
     }
 
