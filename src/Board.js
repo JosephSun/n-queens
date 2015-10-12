@@ -198,7 +198,7 @@
         var numOfPieces = 0;
         var count = 0; 
         for (column = this.attrutes.length - 1; column >= 1 + row; column-) {
-          if (this.attributes[row + count][column] === 1) {
+          if (this.attributes[row + count][column - row] === 1) {
             numOfPieces++;
           }
           count++;
