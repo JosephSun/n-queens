@@ -112,8 +112,23 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      for(var i=0; i < this.attributes.n; i++ )
-        
+      debugger;
+      for(var i = 0; i < this.attributes.n; i++ ){
+
+        var countMyBlessings = 0;
+
+        if(Array.isArray(this.attributes[property])) {
+          for(var j = 0; j < this.attributes.n; j++){
+            if(this.attributes[j][i] === 1){
+              countMyBlessings++;
+            }
+          }
+        if(countMyBlessings>1) {
+          return true;
+        }
+
+        }
+    }
       return false; // fixme
     },
 
