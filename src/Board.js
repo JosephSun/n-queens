@@ -194,38 +194,44 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      for (row = 0; row < this.attributes.n - 1; row++) {
+      for (var row = 0; row < this.attributes.n - 1; row++) {
         var numOfPieces = 0;
         var count = 0; 
-        for (column = this.attributes.length - 1; column >= 1 + row; column--) {
+        debugger;
+        for (var column = this.attributes.n - 1; column >= 1; column--) {
+          debugger;
           if (count - row >= 0) {
-            if (this.attributes[count - row][column - row] === 1) {
+            debugger;
+            if (this.attributes[count - row][column /*- row*/] === 1) {
+              debugger;
               numOfPieces++;
             }
-            count++;
           }
           if (numOfPieces > 1) {
             return true;
           }
+          count++;
+          debugger;
+          
             
         }
       }
       //first for loop closes
 
 
-      for (column = 0; column < this.attributes.n - 1; column++) {
-        var numOfPieces = 0;
-        var count = 0; 
-        for (row = 0; row < this.attributes.n - column; row++) {
-          if (this.attributes[row][column + count] === 1) {
-            numOfPieces++;
-          }
-          count++;
-        }
-        if (numOfPieces > 1) {
-          return true;
-        }
-      }//second for loop closes
+      // for (column = 0; column < this.attributes.n - 1; column++) {
+      //   var numOfPieces = 0;
+      //   var count = 0; 
+      //   for (row = 0; row < this.attributes.n - column; row++) {
+      //     if (this.attributes[row][column + count] === 1) {
+      //       numOfPieces++;
+      //     }
+      //     count++;
+      //   }
+      //   if (numOfPieces > 1) {
+      //     return true;
+      //   }
+      // }//second for loop closes
 
 
 
