@@ -34,7 +34,7 @@ describe('solvers', function() {
   describe('findNQueensSolution()', function() {
 
     it('finds a valid solution for n of 0-7', function() {
-      // Skip 2 and 3 because they have no solution.
+      // Skip 2 and 3 because they have no solutioen.
       [0, 1, 4, 5, 6, 7, 8].map(function(n) {
         var solutionBoard = new Board(findNQueensSolution(n));
         var numPieces = _.reduce(solutionBoard.rows(), function(memo, row) {
@@ -42,9 +42,13 @@ describe('solvers', function() {
             return memo + col;
           }, 0);
         }, 0);
+        // console.log('numPieces',numPieces);
+        // console.log(solutionBoard,'hi!', solutionBoard.get('n'));
 
         expect(solutionBoard.get('n')).to.equal(n);
+           // console.log('numPieces1',numPieces);
         expect(numPieces).to.equal(n);
+   // console.log('numPieces2',numPieces);
         expect(solutionBoard.hasAnyQueensConflicts()).to.be.equal(false);
       });
 
