@@ -197,13 +197,9 @@
       for (var row = 0; row < this.attributes.n - 1; row++) {
         var numOfPieces = 0;
         var count = 0; 
-        debugger;
         for (var column = this.attributes.n - 1; column >= 1; column--) {
-          debugger;
           if (count - row >= 0) {
-            debugger;
             if (this.attributes[count - row][column /*- row*/] === 1) {
-              debugger;
               numOfPieces++;
             }
           }
@@ -211,27 +207,32 @@
             return true;
           }
           count++;
-          debugger;
           
             
         }
       }
-      //first for loop closes
+      for (var row = 0; row + count !== this.attributes.n ; row++) {
+        var numOfPieces = 0;
+        var count = 0; 
+        debugger;
+        for (var column = this.attributes.n - 1; column >= 1; column--) {
+          debugger
+          if (this.attributes[count + row][column + count/*- row*/] === 1) {
+            debugger;
+            numOfPieces++;
+          }
+  
+          if (numOfPieces > 1) {
+            return true;
+          }
+          debugger
+          count++;
+          
+          
+            
+        }
+      }
 
-
-      // for (column = 0; column < this.attributes.n - 1; column++) {
-      //   var numOfPieces = 0;
-      //   var count = 0; 
-      //   for (row = 0; row < this.attributes.n - column; row++) {
-      //     if (this.attributes[row][column + count] === 1) {
-      //       numOfPieces++;
-      //     }
-      //     count++;
-      //   }
-      //   if (numOfPieces > 1) {
-      //     return true;
-      //   }
-      // }//second for loop closes
 
 
 
