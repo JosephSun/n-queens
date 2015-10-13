@@ -11,7 +11,6 @@ describe('solvers', function() {
             return memo + col;
           }, 0);
         }, 0);
-
         expect(solutionBoard.get('n')).to.equal(n);
         expect(numPieces).to.equal(n);
         expect(solutionBoard.hasAnyRooksConflicts()).to.be.equal(false);
@@ -21,7 +20,6 @@ describe('solvers', function() {
   });
 
   describe('countNRooksSolutions()', function() {
-
     it('finds the number of valid solutions for n of 1-8', function() {
       _.range(1, 9).map(function(n) {
         var solutionCount = countNRooksSolutions(n);

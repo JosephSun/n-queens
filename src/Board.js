@@ -79,7 +79,16 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return true; // fixme
+      var count = 0; 
+      for (var i = 0; i < this.attributes.n; i++) {
+        if (this.attributes[rowIndex][i] === 1) {
+          count++;
+        }
+       if (count > 1) {
+        return true;
+       } 
+      }
+      return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
@@ -107,6 +116,15 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      var count = 0; 
+      for (var i = 0; i < this.attributes.n; i++) {
+        if (this.attributes[i][colIndex] === 1) {
+          count++;
+        }
+       if (count > 1) {
+        return true;
+       } 
+      }
       return false; // fixme
     },
 
@@ -211,24 +229,27 @@
             
         }
       }
-      for (var row = 0; row + count !== this.attributes.n ; row++) {
+      for (var row = 0; row + 1  < this.attributes.n  ; row++) {
         var numOfPieces = 0;
         var count = 0; 
-        debugger;
+        ;
         for (var column = this.attributes.n - 1; column >= 1; column--) {
-          debugger
-          if (this.attributes[count + row][column + count/*- row*/] === 1) {
-            debugger;
-            numOfPieces++;
-          }
-  
-          if (numOfPieces > 1) {
-            return true;
-          }
-          debugger
-          count++;
           
-          
+          if (count + row < this.attributes.n) {
+            ;
+            if (this.attributes[count + row][column/*- row*/] === 1) {
+              ;
+              numOfPieces++;
+            }
+    
+            if (numOfPieces > 1) {
+              return true;
+            }
+            ;
+            count++;
+            
+            
+          }
             
         }
       }
