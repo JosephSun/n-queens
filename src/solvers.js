@@ -10,9 +10,15 @@
 // (There are also optimizations that will allow you to skip a lot of the dead search space)
 // take a look at solversSpec.js to see what the tests are expecting
 
-
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
-
+// var matrixXx = [
+//       [0, 1, 0, 0],
+//       [0, 0, 1, 0],
+//       [0, 0, 0, 1],
+//       [0, 0, 0, 0]
+//     ];
+// var board = new Board(matrixXx);
+// console.log("board", board,"board.hasAnyMajorDiagonalConflicts()",board.hasAnyMajorDiagonalConflicts())
 window.findNRooksSolution = function(n) {
   var solution = new makeEmptyMatrix(n); //fixme
 
@@ -30,7 +36,6 @@ window.findNRooksSolution = function(n) {
       arrPosition.splice(arrPosition.indexOf(rookPos),1); //finds position of rookPos in arrPosition array, then splice it out
       j++;
     }
-    console.log("solu", solution);
 
     
     console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
@@ -72,10 +77,37 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
 
+  var solution = new Board({'n':n});
+
+
+    var arrPosition=[];//create an array with n elements
+    //arrPosition shuold be [0,1,2,3,4,5....n-1]
+    for (var k = 0; k < n; k++) {
+      arrPosition.push(k);
+    }
+    var j = 0
+    for(var i=n; i > 0; i--) {
+      var rookPos = arrPosition[Math.floor(Math.random() * i)];
+      solution.attributes[rookPos][j] = 1;    //pushes random position in incrementing rows with each loop
+      console.log("Breaking here, solution", solution.hasAnyColConflicts(), solution.hasAnyRowConflicts(), solution.hasAnyMajorDiagonalConflicts(), solution.hasAnyMinorDiagonalConflicts());
+      if (solution.hasAnyMajorDiagonalConflicts() || solution.hasAnyMinorDiagonalConflicts() || solution.hasAnyColConflicts() || solution.hasAnyRowConflicts()) {
+        solution.attributes[rookPos][j] = 0;
+        i++;
+      } else {
+        arrPosition.splice(arrPosition.indexOf(rookPos),1); //finds position of rookPos in arrPosition array, then splice it out
+      }
+      j++;
+      if (j === n) {
+        j = 0; 
+      }
+    }
+  if (n === 0) {
+     // solution.attributes = [[2,3],[1,2]];
+    return solution.attributes;
+  }
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+  return solution.attributes;
 };
 
 
