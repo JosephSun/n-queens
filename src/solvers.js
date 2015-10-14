@@ -30,15 +30,13 @@ window.findNRooksSolution = function(n) {
     var j = 0
     for(var i=n; i > 0; i--) {
       var rookPos = arrPosition[Math.floor(Math.random() * i)];
-       
-       
       solution[rookPos][j] = 1;    //pushes random position in incrementing rows with each loop
       arrPosition.splice(arrPosition.indexOf(rookPos),1); //finds position of rookPos in arrPosition array, then splice it out
       j++;
     }
 
     
-    console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+    // console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
     return solution;
 
 
@@ -69,45 +67,84 @@ window.countNRooksSolutions = function(n) {
   if (n === 0) {
     solutionCount = 0;
   }
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
+  //  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
 
+
+window.findSolution = function(row, n, board, validator, callback) {
+  //if all rows exhausted
+  if (row === n) {
+    return callback();
+  }
+  //iterate over possible decisions
+  for (var i = 0; i < n; i++) {
+    //place a piece
+    board.togglePiece(row, i);
+    //recurse into remaining problem
+    if (!board[validator]()) {
+      var result = findSolution(row + 1, n, board, validator, callback);
+      if (result) {
+        return result; //eject
+      }
+    }
+    // unplace a piece
+    board.togglePiece(row, i);
+  }
+
+
+};
 
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
 
-  var solution = new Board({'n':n});
+  
+  var board = new Board({n:n});
+  var solution = findSolution(0,n,board, "hasAnyQueensConflicts", function(){
+    return _.map(board.rows(), function(row) {
+      return row.slice();
+    });
+  }) || board.rows();
+  console.log("Single solution for " + n + 'queens:' + JSON.stringify(solution));
+  return solution;
 
-
-    var arrPosition=[];//create an array with n elements
-    //arrPosition shuold be [0,1,2,3,4,5....n-1]
-    for (var k = 0; k < n; k++) {
-      arrPosition.push(k);
-    }
-    var j = 0
-    for(var i=n; i > 0; i--) {
-      var rookPos = arrPosition[Math.floor(Math.random() * i)];
-      solution.attributes[rookPos][j] = 1;    //pushes random position in incrementing rows with each loop
-      console.log("Breaking here, solution", solution.hasAnyColConflicts(), solution.hasAnyRowConflicts(), solution.hasAnyMajorDiagonalConflicts(), solution.hasAnyMinorDiagonalConflicts());
-      if (solution.hasAnyMajorDiagonalConflicts() || solution.hasAnyMinorDiagonalConflicts() || solution.hasAnyColConflicts() || solution.hasAnyRowConflicts()) {
-        solution.attributes[rookPos][j] = 0;
-        i++;
-      } else {
-        arrPosition.splice(arrPosition.indexOf(rookPos),1); //finds position of rookPos in arrPosition array, then splice it out
-      }
-      j++;
-      if (j === n) {
-        j = 0; 
-      }
-    }
-  if (n === 0) {
-     // solution.attributes = [[2,3],[1,2]];
-    return solution.attributes;
-  }
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution.attributes;
+//     var arrPosition=[];//create an array with n elements
+//     //arrPosition shuold be [0,1,2,3,4,5....n-1]
+//     for (var k = 0; k < n; k++) {
+//       arrPosition.push(k);
+//     }
+//     var j = 0
+//     for(var i=n; i > 0; i--) {
+//       var rookPos = arrPosition[Math.floor(Math.random() * i)];
+//       solution.attributes[rookPos][j] = 1;    //pushes random position in incrementing rows with each loop
+//       if (solution.hasAnyMajorDiagonalConflicts() || solution.hasAnyMinorDiagonalConflicts() || solution.hasAnyColConflicts() || solution.hasAnyRowConflicts()) {
+//         // debugger
+//         solution.attributes[rookPos][j] = 0;
+//         i++;
+//       } else {
+//         // debugger;
+//         arrPosition.splice(arrPosition.indexOf(rookPos),1); //finds position of rookPos in arrPosition array, then splice it out
+//       }
+//       j++;
+//      // debugger
+//       if (j === n - 1) {
+//        // debugger;
+//         j = 0; 
+//       }
+//     }
+//   if (n === 0) {
+//      // solution.attributes = [[2,3],[1,2]];
+//     return [];
+//   // }else if (n === 1) {
+//   //   solution.attributes[0][0] = 1;
+//   //   console.log("solution.attributes as shown in the solvers spec",solution.attributes);
+//   //   return solution.attributes;
+//    }
+// //debugger;
+//   // console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
+//   console.log("solution.attributes from solvers file", solution.attributes);
+//   return solution.attributes;
 };
 
 
@@ -115,6 +152,6 @@ window.findNQueensSolution = function(n) {
 window.countNQueensSolutions = function(n) {
   var solutionCount = undefined; //fixme
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  // console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
