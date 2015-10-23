@@ -173,16 +173,17 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      for (row = 0; row < this.attributes.n - 1; row++) {
+      for (row = 0; row < this.attributes.n - 1; row++) {//checks the upper majorDiagonals ( all the diagonals starting from row 0)
         var numOfPieces = 0;
-        var count = 0; 
-        for (column = 0; column < this.attributes.n - row; column++) {
-          if (this.attributes[row + count][column] === 1) {
-            numOfPieces++;
+        var count = 0; //keeps track of the row we should be checking for the diagonal 
+        for (column = 0; column < this.attributes.n - row; column++) {//loops through the possible positions where a rook could be in the diagonal 
+          //row will be constant for the inner loop but the count will take into account what the next row should be
+          if (this.attributes[row + count][column] === 1) {//if there is a rook at this position
+            numOfPieces++;//Counting up
           }
-          count++;
+          count++;//keeping track of what row we are suppose to be checking in the inner loop
         }
-        if (numOfPieces > 1) {
+        if (numOfPieces > 1) {//if there is more than one rook on this diagonal than there is a conflict. 
           return true;
         }
       }
@@ -192,7 +193,8 @@
       for (column = 0; column < this.attributes.n - 1; column++) {
         var numOfPieces = 0;
         var count = 0; 
-        for (row = 0; row < this.attributes.n - column; row++) {
+        for (row = 0; row < this.attributes.n - column; row++) {//does the same thing as above except checks
+          //the bottom major diagnoals 
           if (this.attributes[row][column + count] === 1) {
             numOfPieces++;
           }
